@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stillF&nbsp;-&nbsp;顏色挑選器</title>
+    <link rel="stylesheet" type="text/css" href="/ColorPicker/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/ColorPicker/css/fontawesome-all.css">
+
+    <!--<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/fontawesome-all.css">-->
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+        <div class="container-fluid">
+            <a href="https://stillf.github.io/" class="navbar-brand" style="color:#ffffff;margin-left:10px;font-size:18px;" target="_blank">stillF&ensp;信柴柴，得第一</a>
+        </div>
+    </nav>
+    <main class="container" style="margin-bottom:50px;" id="stock">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div style="color:#333;font-size:22px;font-weight:bold;">
+                顏色挑選器
+                <a href="https://github.com/stillF/ColorPicker" style="margin-left:5px;" target="_blank"><i class="fas fa-link"></i></a>
+            </div>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header">
+                        截圖 Ctrl + V
+                    </div>
+                    <div class="card-body" style="width:90%;">
+                        <div class="row">
+                            <div class="col-md-10 col-sm-12">
+                                <img id="preview" class="img-fluid">
+                            </div>
+                            <div class="col-md-2 col-sm-12">
+                                <input type="color" id="colorPicker" value="#945228">
+                                <span id="pickedHex"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer py-1 bg-dark">
+        <div class="container text-center">
+            <span style="color:#ffffff;font-size:14px;">© Copyright 2022. All Rights Reserved.</span>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("paste", function (evt) {
+            let clipboardItems = evt.clipboardData.items;
+            let items = [].slice.call(clipboardItems).filter(function (item) {
+                return item.type.indexOf("image") !== -1;
+            });
+            if (items.length === 0) {
+                return;
+            }
+            let item = items[0];
+            let blob = item.getAsFile();
+            let imageEle = document.getElementById("preview");
+            imageEle.src = URL.createObjectURL(blob);
+        });
+
+        let colorPicker = document.getElementById("colorPicker");
+        let pickedHex = document.getElementById("pickedHex");
+        colorPicker.addEventListener("input", function () {
+          let code = colorPicker.value.toUpperCase();
+          pickedHex.textContent = code;
+        }, false);
+    </script>
+</body>
+</html>
