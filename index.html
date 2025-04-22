@@ -30,6 +30,7 @@
                     <div class="card-header">
                         截圖 Ctrl + V
                     </div>
+                    <input type="hidden" id="base64Data" />
                     <div class="card-body" style="width:90%;">
                         <div class="row">
                             <div class="col-md-10 col-sm-12">
@@ -38,9 +39,14 @@
                             <div class="col-md-2 col-sm-12">
                                 <input type="color" id="colorPicker" value="#945228">
                                 <span id="pickedHex"></span>
+                                <div>
+                                    <button class="btn btn-primary btn-sm" type="button" onclick="copyImageBase64Handler()">複製</button>
+                                    <span id="checkCopy"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -68,6 +74,8 @@
             let reader = new FileReader();
             reader.onload = function (event) {
                 imageEle.src = event.target.result;
+                document.getElementById("base64Data").value = event.target.result;
+                // console.log(document.getElementById("base64Data").value);
             };
             reader.readAsDataURL(blob);
         });
@@ -78,6 +86,18 @@
           let code = colorPicker.value.toUpperCase();
           pickedHex.textContent = code;
         }, false);
+
+        function copyImageBase64Handler() {
+            const imageData = document.getElementById("base64Data").value;
+            let checkCopy = document.getElementById("checkCopy");
+            if (imageData) {
+                navigator.clipboard.writeText(imageData)
+                    .then(() => checkCopy.textContent = "複製成功")
+                    .catch(
+                        err =>  checkCopy.textContent = "複製失敗"
+                    );
+            }
+        }
     </script>
 </body>
 </html>
