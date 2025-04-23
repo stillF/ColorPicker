@@ -41,7 +41,7 @@
                                 <span id="pickedHex"></span>
                                 <div>
                                     <button class="btn btn-primary btn-sm" type="button" onclick="copyImageBase64Handler()">複製</button>
-                                    <span id="checkCopy"></span>
+                                    <span id="checkCopy" onclick="emptyCheckCopyHandler()"></span>
                                 </div>
                             </div>
                         </div>
@@ -97,6 +97,11 @@
                         err =>  checkCopy.textContent = "複製失敗"
                     );
             }
+        }
+
+        function emptyCheckCopyHandler() {
+            let checkCopy = document.getElementById("checkCopy");
+            checkCopy.textContent = "";
         }
     </script>
 </body>
