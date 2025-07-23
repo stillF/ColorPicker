@@ -37,6 +37,10 @@
                                 <img id="preview" class="img-fluid">
                             </div>
                             <div class="col-md-2 col-sm-12">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="isThumbnail" checked>
+                                    <label class="form-check-label" for="isThumbnail">縮圖</label>
+                                </div>
                                 <input type="color" id="colorPicker" value="#945228">
                                 <span id="pickedHex"></span>
                                 <div>
@@ -44,8 +48,11 @@
                                     <span id="checkCopy" onclick="emptyCheckCopyHandler()"></span>
                                 </div>
                             </div>
+                            <div class="col-md-10 col-sm-12">
+                            </div>                            
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -72,13 +79,13 @@
             let img = new Image();
             img.onload = function () {
                 const targetHeight = 150;
-
-                // 檢查圖片高度是否小於或等於 150px
-                if (img.height <= targetHeight) {
-                    // 高度小於或等於 150px，直接使用原始 Blob
+                const isThumbnail = document.getElementById("isThumbnail");
+                // 檢查圖片高度是否小於或等於 150px或不是縮圖(原圖)
+                if (img.height <= targetHeight || isThumbnail.checked === false) {
+                    // 直接使用原始 Blob
                     imageEle.src = URL.createObjectURL(blob);
                     let reader = new FileReader();
-                    reader.onload = function (event) {
+                    reader.onload = function (event)  {
                         imageEle.src = event.target.result;
                         document.getElementById("base64Data").value = event.target.result;
                     };
@@ -112,7 +119,6 @@
                     }, "image/jpeg", 0.9); // 可調整格式和品質
                 }
             };
-
             // 將原始 Blob 轉為圖片
             img.src = URL.createObjectURL(blob);
         });
