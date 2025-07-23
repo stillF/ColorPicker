@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -68,16 +68,54 @@
             let item = items[0];
             let blob = item.getAsFile();
             let imageEle = document.getElementById("preview");
-            // imageEle.src = URL.createObjectURL(blob);
 
-            // 使用 FileReader 將 Blob 轉為 Base64
-            let reader = new FileReader();
-            reader.onload = function (event) {
-                imageEle.src = event.target.result;
-                document.getElementById("base64Data").value = event.target.result;
-                // console.log(document.getElementById("base64Data").value);
+            // 創建圖片物件來載入 Blob
+            let img = new Image();
+            img.onload = function () {
+                const targetHeight = 150;
+
+                // 檢查圖片高度是否小於或等於 150px
+                if (img.height <= targetHeight) {
+                    // 高度小於或等於 150px，直接使用原始 Blob
+                    imageEle.src = URL.createObjectURL(blob);
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        imageEle.src = event.target.result;
+                        document.getElementById("base64Data").value = event.target.result;
+                    };
+                    reader.readAsDataURL(blob);
+                } else {
+                    // 高度大於 150px，進行等比例縮圖
+                    const aspectRatio = img.width / img.height;
+                    const targetWidth = Math.round(targetHeight * aspectRatio);
+
+                    // 創建 Canvas 進行縮圖
+                    let canvas = document.createElement("canvas");
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    let ctx = canvas.getContext("2d");
+
+                    // 繪製縮放後的圖片
+                    ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+                    // 將 Canvas 轉為 Blob 並設置預覽
+                    canvas.toBlob(function (resizedBlob) {
+                        // 設置預覽圖片
+                        imageEle.src = URL.createObjectURL(resizedBlob);
+
+                        // 使用 FileReader 將縮放後的 Blob 轉為 Base64
+                        let reader = new FileReader();
+                        reader.onload = function (event) {
+                            imageEle.src = event.target.result;
+                            document.getElementById("base64Data").value = event.target.result;
+                        };
+                        reader.readAsDataURL(resizedBlob);
+                    }, "image/jpeg", 0.9); // 可調整格式和品質
+                }
             };
-            reader.readAsDataURL(blob);
+
+            // 將原始 Blob 轉為圖片
+            img.src = URL.createObjectURL(blob);
         });
 
         let colorPicker = document.getElementById("colorPicker");
