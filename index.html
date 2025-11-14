@@ -179,11 +179,15 @@
                 }
                 cropper = new Cropper(image, {
                     viewMode: 1,
-                    dragMode: "move",
-                    autoCropArea: 0.8,
+                    dragMode: "crop",
+                    autoCrop: false,
+                    restore: false,
+                    guides: true,
+                    center: true,
+                    highlight: true,
                     cropBoxMovable: true,
                     cropBoxResizable: true,
-                    toggleDragModeOnDblclick: false
+                    toggleDragModeOnDblclick: false,
                 });
             };
         }
