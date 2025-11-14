@@ -197,7 +197,7 @@
                 return;
             }
             const canvas = cropper.getCroppedCanvas();
-            const croppedBase64 = canvas.toDataURL('image/jpeg');
+            const croppedBase64 = canvas.toDataURL("image/jpeg");
             let checkCopy = document.getElementById("checkCopy");
             if (croppedBase64) {
                 navigator.clipboard.writeText(croppedBase64)
