@@ -2,212 +2,212 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>stillF&nbsp;-&nbsp;顏色挑選器</title>
-    <link rel="stylesheet" type="text/css" href="/ColorPicker/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/ColorPicker/css/fontawesome-all.css">
-    <link rel="stylesheet" type="text/css" href="/ColorPicker/css/cropper.min.css">
-    <script type="text/javascript" src="/ColorPicker/js/cropper.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>stillF&nbsp;-&nbsp;顏色挑選器</title>
+  <link rel="stylesheet" type="text/css" href="/ColorPicker/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/ColorPicker/css/fontawesome-all.css">
+  <link rel="stylesheet" type="text/css" href="/ColorPicker/css/cropper.min.css">
+  <script type="text/javascript" src="/ColorPicker/js/cropper.min.js"></script>
 
-    <!-- <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/fontawesome-all.css">
     <link rel="stylesheet" type="text/css" href="./css/cropper.min.css">
     <script type="text/javascript" src="./js/cropper.min.js"></script> -->
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
-        <div class="container-fluid">
-            <a href="https://stillf.github.io/" class="navbar-brand"
-                style="color:#ffffff;margin-left:10px;font-size:18px;" target="_blank">stillF&ensp;信柴柴，得第一</a>
-        </div>
-    </nav>
-    <main class="container" style="margin-bottom:50px;" id="stock">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div style="color:#333;font-size:22px;font-weight:bold;">
-                顏色挑選器
-                <a href="https://github.com/stillF/ColorPicker" style="margin-left:5px;" target="_blank"><i
-                        class="fas fa-link"></i></a>
-            </div>
-            <hr>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="card" style="margin-top:20px;">
-                    <div class="card-header">
-                        截圖 Ctrl + V
-                    </div>
-                    <input type="hidden" id="base64Data" />
-                    <div class="card-body" style="width:90%;">
-                        <div class="row">
-                            <div class="col-md-10 col-sm-12">
-                                <img id="preview" class="img-fluid">
-                            </div>
-                            <div class="col-md-2 col-sm-12">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="isThumbnail" checked>
-                                    <label class="form-check-label" for="isThumbnail">縮圖</label>
-                                </div>
-                                <input type="color" id="colorPicker" value="#945228">
-                                <span id="pickedHex"></span>
-                                <div>
-                                    <button class="btn btn-primary btn-sm" type="button"
-                                        onclick="copyImageBase64Handler()">複製</button>
-                                    <span id="checkCopy" onclick="emptyCheckCopyHandler()"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-10 col-sm-12">
-                                <div style="margin-top: 1rem;margin-right: 1rem;">
-                                    <img id="cropImage" class="img-fluid" />
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-sm-12">
-                                <div style="margin-top: 2rem;">
-                                    <button class="btn btn-success btn-sm" type="button"
-                                        onclick="initCropper()">啟動剪裁</button>
-                                    <button class="btn btn-success btn-sm" type="button"
-                                        onclick="cropImage()">剪裁並複製</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+    <div class="container-fluid">
+      <a href="https://stillf.github.io/" class="navbar-brand" style="color:#ffffff;margin-left:10px;font-size:18px;"
+        target="_blank">stillF&ensp;信柴柴，得第一</a>
+    </div>
+  </nav>
+  <main class="container" style="margin-bottom:50px;" id="stock">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div style="color:#333;font-size:22px;font-weight:bold;">
+        顏色挑選器
+        <a href="https://github.com/stillF/ColorPicker" style="margin-left:5px;" target="_blank"><i
+            class="fas fa-link"></i></a>
+      </div>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="card" style="margin-top:20px;">
+          <div class="card-header">
+            截圖 Ctrl + V
+          </div>
+          <input type="hidden" id="base64Data" />
+          <div class="card-body" style="width:90%;">
+            <div class="row">
+              <div class="col-md-10 col-sm-12">
+                <img id="preview" class="img-fluid">
+              </div>
+              <div class="col-md-2 col-sm-12">
+                <div class="form-group form-check">
+                  <input type="checkbox" class="form-check-input" id="isThumbnail" checked>
+                  <label class="form-check-label" for="isThumbnail">縮圖</label>
                 </div>
+                <div class="form-group form-check">
+                  <input type="checkbox" class="form-check-input" id="isWebp" checked>
+                  <label class="form-check-label" for="isWebp">webp</label>
+                </div>
+                <input type="color" id="colorPicker" value="#945228">
+                <span id="pickedHex"></span>
+                <div>
+                  <button class="btn btn-primary btn-sm" type="button" onclick="copyImageBase64Handler()">複製</button>
+                  <span id="checkCopy" onclick="emptyCheckCopyHandler()"></span>
+                </div>
+              </div>
+              <div class="col-md-10 col-sm-12">
+                <div style="margin-top: 1rem;margin-right: 1rem;">
+                  <img id="cropImage" class="img-fluid" />
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-12">
+                <div style="margin-top: 2rem;">
+                  <button class="btn btn-success btn-sm" type="button" onclick="initCropper()">啟動剪裁</button>
+                  <button class="btn btn-success btn-sm" type="button" onclick="cropImage()">剪裁並複製</button>
+                </div>
+              </div>
             </div>
-        </div>
-    </main>
-    <footer class="footer py-1 bg-dark">
-        <div class="container text-center">
-            <span style="color:#ffffff;font-size:14px;">© Copyright 2022. All Rights Reserved.</span>
-        </div>
-    </footer>
-    <script>
-        document.addEventListener("paste", function (evt) {
-            let clipboardItems = evt.clipboardData.items;
-            let items = [].slice.call(clipboardItems).filter(function (item) {
-                return item.type.indexOf("image") !== -1;
-            });
-            if (items.length === 0) {
-                return;
-            }
-            let item = items[0];
-            let blob = item.getAsFile();
-            let imageEle = document.getElementById("preview");
+          </div>
 
-            // 創建圖片物件來載入 Blob
-            let img = new Image();
-            img.onload = function () {
-                const targetHeight = 150;
-                const isThumbnail = document.getElementById("isThumbnail");
-                // 檢查圖片高度是否小於或等於 150px或不是縮圖(原圖)
-                if (img.height <= targetHeight || isThumbnail.checked === false) {
-                    // 直接使用原始 Blob
-                    imageEle.src = URL.createObjectURL(blob);
-                    let reader = new FileReader();
-                    reader.onload = function (event) {
-                        imageEle.src = event.target.result;
-                        document.getElementById("base64Data").value = event.target.result;
-                    };
-                    reader.readAsDataURL(blob);
-                } else {
-                    // 高度大於 150px，進行等比例縮圖
-                    const aspectRatio = img.width / img.height;
-                    const targetWidth = Math.round(targetHeight * aspectRatio);
-                    // 創建 Canvas 進行縮圖
-                    let canvas = document.createElement("canvas");
-                    canvas.width = targetWidth;
-                    canvas.height = targetHeight;
-                    let ctx = canvas.getContext("2d");
-                    // 繪製縮放後的圖片
-                    ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
-                    // 將 Canvas 轉為 Blob 並設置預覽
-                    canvas.toBlob(function (resizedBlob) {
-                        // 設置預覽圖片
-                        imageEle.src = URL.createObjectURL(resizedBlob);
-                        // 使用 FileReader 將縮放後的 Blob 轉為 Base64
-                        let reader = new FileReader();
-                        reader.onload = function (event) {
-                            imageEle.src = event.target.result;
-                            document.getElementById("base64Data").value = event.target.result;
-                        };
-                        reader.readAsDataURL(resizedBlob);
-                    }, "image/jpeg", 0.9); // 可調整格式和品質
-                }
-            };
-            // 將原始 Blob 轉為圖片
-            img.src = URL.createObjectURL(blob);
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer py-1 bg-dark">
+    <div class="container text-center">
+      <span style="color:#ffffff;font-size:14px;">© Copyright 2022. All Rights Reserved.</span>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener("paste", function (evt) {
+      let clipboardItems = evt.clipboardData.items;
+      let items = [].slice.call(clipboardItems).filter(function (item) {
+        return item.type.indexOf("image") !== -1;
+      });
+      if (items.length === 0) {
+        return;
+      }
+
+      let item = items[0];
+      let blob = item.getAsFile();
+      let imageEle = document.getElementById("preview");
+
+      let img = new Image();
+      img.onload = function () {
+        const targetHeight = 150;
+        const isThumbnail = document.getElementById("isThumbnail");
+        const isWebp = document.getElementById("isWebp");
+        const outputType = isWebp.checked ? "image/webp" : "image/jpeg";
+
+        let finalWidth, finalHeight;
+
+        // 判斷是否需要縮圖
+        if (img.height <= targetHeight || isThumbnail.checked === false) {
+          // 不縮圖，維持原尺寸
+          finalWidth = img.width;
+          finalHeight = img.height;
+        } else {
+          // 等比例縮圖
+          const aspectRatio = img.width / img.height;
+          finalWidth = Math.round(targetHeight * aspectRatio);
+          finalHeight = targetHeight;
+        }
+
+        let canvas = document.createElement("canvas");
+        canvas.width = finalWidth;
+        canvas.height = finalHeight;
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, finalWidth, finalHeight);
+        canvas.toBlob(function (outputBlob) {
+          // 設置預覽
+          imageEle.src = URL.createObjectURL(resizedBlob);
+          // 轉為 Base64
+          let reader = new FileReader();
+          reader.onload = function (event) {
+            document.getElementById("base64Data").value = event.target.result;
+          };
+          reader.readAsDataURL(outputBlob);
+        }, outputType, 0.9);
+      };
+      img.src = URL.createObjectURL(blob);
+    });
+
+    let colorPicker = document.getElementById("colorPicker");
+    let pickedHex = document.getElementById("pickedHex");
+    colorPicker.addEventListener("input", function () {
+      let code = colorPicker.value.toUpperCase();
+      pickedHex.textContent = code;
+    }, false);
+
+    function copyImageBase64Handler() {
+      const imageData = document.getElementById("base64Data").value;
+      let checkCopy = document.getElementById("checkCopy");
+      if (imageData) {
+        navigator.clipboard.writeText(imageData)
+          .then(() => checkCopy.textContent = "複製成功")
+          .catch(
+            err => checkCopy.textContent = "複製失敗"
+          );
+      }
+    }
+
+    function emptyCheckCopyHandler() {
+      let checkCopy = document.getElementById("checkCopy");
+      checkCopy.textContent = "";
+    }
+
+    let cropper;
+
+    // 初始化 Cropper
+    function initCropper() {
+      const image = document.getElementById("cropImage");
+      const imageData = document.getElementById("base64Data").value;
+      if (cropper) {
+        cropper.destroy();
+      }
+      image.src = imageData;
+      image.onload = function () {
+        if (cropper) {
+          cropper.destroy();
+        }
+        cropper = new Cropper(image, {
+          viewMode: 1,
+          dragMode: "crop",
+          autoCrop: false,
+          restore: false,
+          guides: true,
+          center: true,
+          highlight: true,
+          cropBoxMovable: true,
+          cropBoxResizable: true,
+          toggleDragModeOnDblclick: false,
         });
+      };
+    }
 
-        let colorPicker = document.getElementById("colorPicker");
-        let pickedHex = document.getElementById("pickedHex");
-        colorPicker.addEventListener("input", function () {
-            let code = colorPicker.value.toUpperCase();
-            pickedHex.textContent = code;
-        }, false);
-
-        function copyImageBase64Handler() {
-            const imageData = document.getElementById("base64Data").value;
-            let checkCopy = document.getElementById("checkCopy");
-            if (imageData) {
-                navigator.clipboard.writeText(imageData)
-                    .then(() => checkCopy.textContent = "複製成功")
-                    .catch(
-                        err => checkCopy.textContent = "複製失敗"
-                    );
-            }
-        }
-
-        function emptyCheckCopyHandler() {
-            let checkCopy = document.getElementById("checkCopy");
-            checkCopy.textContent = "";
-        }
-
-        let cropper;
-
-        // 初始化 Cropper
-        function initCropper() {
-            const image = document.getElementById("cropImage");
-            const imageData = document.getElementById("base64Data").value;
-            if (cropper) {
-                cropper.destroy();
-            }
-            image.src = imageData;
-            image.onload = function () {
-                if (cropper) {
-                    cropper.destroy();
-                }
-                cropper = new Cropper(image, {
-                    viewMode: 1,
-                    dragMode: "crop",
-                    autoCrop: false,
-                    restore: false,
-                    guides: true,
-                    center: true,
-                    highlight: true,
-                    cropBoxMovable: true,
-                    cropBoxResizable: true,
-                    toggleDragModeOnDblclick: false,
-                });
-            };
-        }
-
-        function cropImage() {
-            if (!cropper) {
-                return;
-            }
-            const canvas = cropper.getCroppedCanvas();
-            const croppedBase64 = canvas.toDataURL("image/jpeg");
-            let checkCopy = document.getElementById("checkCopy");
-            if (croppedBase64) {
-                navigator.clipboard.writeText(croppedBase64)
-                    .then(() => checkCopy.textContent = "複製成功")
-                    .catch(
-                        err => checkCopy.textContent = "複製失敗"
-                    );
-            }
-        }
-    </script>
+    function cropImage() {
+      if (!cropper) {
+        return;
+      }
+      const canvas = cropper.getCroppedCanvas();
+      const isWebp = document.getElementById("isWebp");
+      const outputType = isWebp.checked ? "image/webp" : "image/jpeg";
+      const croppedBase64 = canvas.toDataURL(outputType);
+      let checkCopy = document.getElementById("checkCopy");
+      if (croppedBase64) {
+        navigator.clipboard.writeText(croppedBase64)
+          .then(() => checkCopy.textContent = "複製成功")
+          .catch(
+            err => checkCopy.textContent = "複製失敗"
+          );
+      }
+    }
+  </script>
 </body>
 
 </html>
