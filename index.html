@@ -125,7 +125,7 @@
         ctx.drawImage(img, 0, 0, finalWidth, finalHeight);
         canvas.toBlob(function (outputBlob) {
           // 設置預覽
-          imageEle.src = URL.createObjectURL(resizedBlob);
+          imageEle.src = URL.createObjectURL(outputBlob);
           // 轉為 Base64
           let reader = new FileReader();
           reader.onload = function (event) {
