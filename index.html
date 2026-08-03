@@ -11,9 +11,9 @@
   <script type="text/javascript" src="/ColorPicker/js/cropper.min.js"></script>
 
   <!-- <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./css/fontawesome-all.css">
-    <link rel="stylesheet" type="text/css" href="./css/cropper.min.css">
-    <script type="text/javascript" src="./js/cropper.min.js"></script> -->
+  <link rel="stylesheet" type="text/css" href="./css/fontawesome-all.css">
+  <link rel="stylesheet" type="text/css" href="./css/cropper.min.css">
+  <script type="text/javascript" src="./js/cropper.min.js"></script> -->
 </head>
 
 <body>
@@ -58,6 +58,9 @@
                 <div>
                   <button class="btn btn-primary btn-sm" type="button" onclick="copyImageBase64Handler()">複製</button>
                   <span id="checkCopy" onclick="emptyCheckCopyHandler()"></span>
+                </div>
+                <div style="margin-top: 0.5rem;">
+                  <button class="btn btn-primary btn-sm" type="button" onclick="downloadImgHandler()">另存圖片</button>
                 </div>
               </div>
               <div class="col-md-10 col-sm-12">
@@ -205,6 +208,34 @@
           .catch(
             err => checkCopy.textContent = "複製失敗"
           );
+      }
+    }
+
+    function getCurrentDateTimeString() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      const hour = String(now.getHours()).padStart(2, "0");
+      const min = String(now.getMinutes()).padStart(2, "0");
+      const sec = String(now.getSeconds()).padStart(2, "0");
+      const ms = String(now.getMilliseconds()).padStart(3, "0");
+      const result = `${year}${month}${day}${hour}${min}${sec}${ms}`;
+      return result;
+    }
+
+    function downloadImgHandler() {
+      const imageData = document.getElementById("base64Data").value;
+      if (imageData) {
+        const imgName = getCurrentDateTimeString();
+        const imgType = isWebp.checked ? ".webp" : ".jpg";
+
+        const link = document.createElement("a");
+        link.href = imageData;
+        link.download = `${imgName}${imgType}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
     }
   </script>
