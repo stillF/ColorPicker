@@ -220,8 +220,7 @@
       const min = String(now.getMinutes()).padStart(2, "0");
       const sec = String(now.getSeconds()).padStart(2, "0");
       const ms = String(now.getMilliseconds()).padStart(3, "0");
-      const result = `${year}${month}${day}${hour}${min}${sec}${ms}`;
-      return result;
+      return `${year}${month}${day}${hour}${min}${sec}${ms}`;
     }
 
     function downloadImgHandler() {
