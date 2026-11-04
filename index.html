@@ -71,12 +71,16 @@
               <div class="col-md-2 col-sm-12">
                 <div style="margin-top: 2rem;">
                   <button class="btn btn-success btn-sm" type="button" onclick="initCropper()">啟動剪裁</button>
-                  <button class="btn btn-success btn-sm" type="button" onclick="cropImage()">剪裁並複製</button>
+                  <div style="margin-top: 0.5rem;">
+                    <button class="btn btn-success btn-sm" type="button" onclick="cropImageHandler()">剪裁</button>
+                  </div>
+                  <div style="margin-top: 0.5rem;">
+                    <button class="btn btn-success btn-sm" type="button" onclick="mosaicHandler()">馬賽克</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -193,22 +197,39 @@
       };
     }
 
-    function cropImage() {
+    function cropImageHandler() {
       if (!cropper) {
-        return;
+          return;
       }
       const canvas = cropper.getCroppedCanvas();
+      if (!canvas) {
+          alert("請先框選要裁剪的區域！");
+          return;
+      }
+
       const isWebp = document.getElementById("isWebp");
       const outputType = isWebp.checked ? "image/webp" : "image/jpeg";
       const croppedBase64 = canvas.toDataURL(outputType);
-      let checkCopy = document.getElementById("checkCopy");
-      if (croppedBase64) {
-        navigator.clipboard.writeText(croppedBase64)
-          .then(() => checkCopy.textContent = "複製成功")
-          .catch(
-            err => checkCopy.textContent = "複製失敗"
-          );
-      }
+
+      document.getElementById("base64Data").value = croppedBase64;
+
+      const image = document.getElementById("cropImage");
+      image.src = croppedBase64;
+      image.onload = function () {
+          cropper.destroy();
+          cropper = new Cropper(image, {
+              viewMode: 1,
+              dragMode: "crop",
+              autoCrop: false,
+              restore: false,
+              guides: true,
+              center: true,
+              highlight: true,
+              cropBoxMovable: true,
+              cropBoxResizable: true,
+              toggleDragModeOnDblclick: false,
+          });
+      };
     }
 
     function getCurrentDateTimeString() {
@@ -237,7 +258,73 @@
         document.body.removeChild(link);
       }
     }
+
+    function mosaicHandler() {
+      if (!cropper) {
+        return;
+      }
+
+      const cropData = cropper.getData(true);
+      const cropX = cropData.x;
+      const cropY = cropData.y;
+      const cropWidth = cropData.width;
+      const cropHeight = cropData.height;
+
+      if (cropWidth <= 0 || cropHeight <= 0) {
+        alert("請先框選要打馬賽克的區域！");
+        return;
+      }
+
+      const sourceImage = cropper.element; 
+      const naturalWidth = cropper.getImageData().naturalWidth;
+      const naturalHeight = cropper.getImageData().naturalHeight;
+
+      const fullCanvas = document.createElement("canvas");
+      fullCanvas.width = naturalWidth;
+      fullCanvas.height = naturalHeight;
+      const ctx = fullCanvas.getContext("2d");
+
+      ctx.drawImage(sourceImage, 0, 0, naturalWidth, naturalHeight);
+
+      const mosaicSize = 4;
+      const scaledW = Math.max(1, Math.floor(cropWidth / mosaicSize));
+      const scaledH = Math.max(1, Math.floor(cropHeight / mosaicSize));
+
+      const tempCanvas = document.createElement("canvas");
+      tempCanvas.width = scaledW;
+      tempCanvas.height = scaledH;
+      const tempCtx = tempCanvas.getContext("2d");
+      tempCtx.imageSmoothingEnabled = false;
+
+      tempCtx.drawImage(fullCanvas, cropX, cropY, cropWidth, cropHeight, 0, 0, scaledW, scaledH);
+
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(tempCanvas, 0, 0, scaledW, scaledH, cropX, cropY, cropWidth, cropHeight);
+
+      const isWebp = document.getElementById("isWebp");
+      const outputType = isWebp.checked ? "image/webp" : "image/jpeg";
+      const updatedBase64 = fullCanvas.toDataURL(outputType);
+
+      document.getElementById("base64Data").value = updatedBase64;
+
+      const image = document.getElementById("cropImage");
+      image.src = updatedBase64;
+      image.onload = function () {
+        cropper.destroy();
+        cropper = new Cropper(image, {
+          viewMode: 1,
+          dragMode: "crop",
+          autoCrop: false,
+          restore: false,
+          guides: true,
+          center: true,
+          highlight: true,
+          cropBoxMovable: true,
+          cropBoxResizable: true,
+          toggleDragModeOnDblclick: false,
+        });
+      };
+    }
   </script>
 </body>
-
 </html>
