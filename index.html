@@ -62,6 +62,9 @@
                 <div style="margin-top: 0.5rem;">
                   <button class="btn btn-primary btn-sm" type="button" onclick="downloadImgHandler()">另存圖片</button>
                 </div>
+                <div style="margin-top: 0.5rem;">
+                  <button class="btn btn-primary btn-sm" type="button" onclick="openNewImgHandler()">另開圖片</button>
+                </div>
               </div>
               <div class="col-md-10 col-sm-12">
                 <div style="margin-top: 1rem;margin-right: 1rem;">
@@ -256,6 +259,29 @@
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+      }
+    }
+
+    function openNewImgHandler() {
+      const imageData = document.getElementById("base64Data").value;
+      if (imageData) {
+        const newWindow = window.open();
+        if (newWindow) {
+          newWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <title>檢視圖片</title>
+              </head>
+              <body style="margin: 0; background-color: #111; display: flex; justify-content: center; align-items: center; height: 100vh;">
+                <img src="${imageData}" alt="Base64 Image" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+              </body>
+            </html>
+          `);
+          newWindow.document.close();
+        } else {
+          alert("請允許瀏覽器彈出視窗功能，才能檢視圖片。");
+        }
       }
     }
 
